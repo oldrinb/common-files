@@ -1,1 +1,1 @@
-# common-files
+Common files needed for various projects.
