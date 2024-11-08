@@ -2,37 +2,43 @@
 
 /**
  * Author: Oldrin Bărbulescu
- * Last modified: Sep 24, 2024
+ * Last modified: Oct 27, 2024
  **/
 
  
 const util = {
-  rotationAngle: 0.0,
-  fps: 0,
-
-  lastTime_: 0.0, lastFrameTime_: 0.0, frameCount_: 0,
-
+  lastTime_: [0.0, 0.0], lastFrameTime_: 0.0,
+  rotationAngle_: [0.0, 0.0],
+  frameCount_: 0, fps_: 0,
 
 
-  update: function(now, rotationSpeed) {
-    let deltaTime = now - this.lastTime_;
 
-    this.rotationAngle +=  rotationSpeed * deltaTime;
-    this.rotationAngle = (this.rotationAngle > 2 * Math.PI) ?
-        this.rotationAngle - 2 * Math.PI : this.rotationAngle;
-
+  getFPS: function(now) {
     this.frameCount_++;
     if (now - this.lastFrameTime_ >= 1000) {
-      this.fps = this.frameCount_;
+      this.fps_ = this.frameCount_;
       this.frameCount_ = 0;
       this.lastFrameTime_ = now;
     }
 
-    this.lastTime_ = now;
+    return this.fps_;
   },
 
 
 
+  getRotationAngle: function(i, now, rotationSpeed) {
+    let deltaTime = now - this.lastTime_[i];
+
+    this.rotationAngle_[i] +=  rotationSpeed * deltaTime;
+    this.rotationAngle_[i] = (this.rotationAngle_[i] > 2 * Math.PI) ?
+        this.rotationAngle_[i] - 2 * Math.PI : this.rotationAngle_[i];
+
+    this.lastTime_[i] = now;
+    return this.rotationAngle_[i];
+  },
+
+
+  
   getErrorMessage: function(errorCode) {
     let message = " More information can be found by checking your browser's " +
         "developer console."
@@ -125,10 +131,10 @@ const util = {
       let labels = document.getElementsByTagName("LABEL");
 
       for (let i = 0; i < elements.length; i++) {
-        if (elements[i].tagName == "INPUT" ||
+        if (elements[i].tagName == "BUTTON" ||
+            elements[i].tagName == "INPUT" ||
             elements[i].tagName == "SELECT" ||
             elements[i].tagName == "TEXTAREA") {
-              
           if (elements[i].readOnly || elements[i].hidden)
             elements[i].disabled = true;
           else elements[i].disabled = !enabled;
@@ -154,7 +160,8 @@ const util = {
 
     function displayControl(name, visible) {
       for (let i = 0; i < elements.length; i++)
-        if (elements[i].tagName == "INPUT" ||
+        if (elements[i].tagName == "BUTTON" ||
+            elements[i].tagName == "INPUT" ||
             elements[i].tagName == "SELECT" ||
             elements[i].tagName == "TEXTAREA") {
           let parent = elements[i].parentElement;
