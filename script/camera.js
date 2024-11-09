@@ -2,7 +2,7 @@
 
 /**
  * Author: Oldrin Bărbulescu
- * Last modified: Aug 2, 2024
+ * Last modified: Nov 9, 2024
  **/
 
 //fieldOfView in degrees
@@ -144,6 +144,18 @@ function Camera(position, lookAt, fieldOfView, nearPlane, farPlane) {
 
     updateDirections_(true);
     updateViewMatrix_();
+  };
+
+
+
+  this.getMinFieldOfView = function() {
+    return MIN_FOV_;
+  };
+
+
+
+  this.getMinFieldOfView = function() {
+    return MAX_FOV_;
   };
 
 
