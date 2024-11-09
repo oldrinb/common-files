@@ -154,7 +154,7 @@ function Camera(position, lookAt, fieldOfView, nearPlane, farPlane) {
 
 
 
-  this.getMinFieldOfView = function() {
+  this.getMaxFieldOfView = function() {
     return MAX_FOV_;
   };
 
