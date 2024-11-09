@@ -2,10 +2,9 @@
 
 /**
  * Author: Oldrin Bărbulescu
- * Last modified: Oct 27, 2024
+ * Last modified: Nov 9, 2024
  **/
 
- 
 const util = {
   lastTime_: [0.0, 0.0], lastFrameTime_: 0.0,
   rotationAngle_: [0.0, 0.0],
@@ -38,7 +37,29 @@ const util = {
   },
 
 
-  
+
+  getLastRotationAngle: function(i) {
+    return this.rotationAngle_[i];
+  },
+
+
+
+  setRotationAngle: function(i, angle) {
+    this.rotationAngle_[i] = angle;
+    if (this.rotationAngle_[i] >= 2 * Math.PI) 
+      this.rotationAngle_[i] -= 2 * Math.PI;
+    else if (this.rotationAngle_[i] < 0.0)
+      this.rotationAngle_[i] += 2 * Math.PI;
+  },
+
+
+
+  resetRotationAngle: function() {
+    this.rotationAngle_ = [0.0, 0.0];
+  },
+
+
+
   getErrorMessage: function(errorCode) {
     let message = " More information can be found by checking your browser's " +
         "developer console."
